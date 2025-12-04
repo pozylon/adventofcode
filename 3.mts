@@ -8,6 +8,9 @@ export const findHighestJoltageInSet = (set: number[] = [], level: number = 0, m
     // Improvement: prune paths that can't beat the current best
     if ((currentValue + exponent) < (acc || 0)) return acc;
 
+    // Improvement: prune paths where it will be null in the end
+    if (set.length < (maxLevels - level)) return acc;
+
     if (level + 1 === maxLevels) return Math.max(acc || 0, currentValue);
     const nextValue = findHighestJoltageInSet(set.slice(idx + 1), level + 1, maxLevels);
     return nextValue === null ? acc : Math.max(acc || 0, currentValue + nextValue);
